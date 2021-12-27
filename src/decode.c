@@ -10,8 +10,8 @@ void decode(u_int16_t op) {
 	NNN = op & 0x0FFF;
 	NN = op & 0x00FF;
 	N = op & 0x000F;
-	X = (op & 0x0F00) >> 12;
-	Y = (op & 0x00F0) >> 8;
+	X = (op & 0x0F00) >> 8;
+	Y = (op & 0x00F0) >> 4;
 	
 	switch(op & 0xF000) {
 		case 0x0000: {

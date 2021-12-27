@@ -1,23 +1,48 @@
 #ifndef CHIP_8_H
 #define CHIP_8_H
 
-//C standard
+#define DISPLAY_WIDTH 64
+#define DISPLAY_HEIGHT 32
+
+//C standard & system library
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
 
-u_int16_t fetch();
-void skip();
-void update_screen();
 
+#ifdef _WIN32
+typedef uint8_t u_int8_t;
+typedef uint16_t u_int16_t;
+#endif
+
+
+//misc
+#include <SDL2/SDL.h>
+
+//main.c
+void run();
+
+//video.c
+int init_video();
+void draw_screen(u_int8_t* display_data);
+void close_video();
+
+//decode.c
 void decode(u_int16_t op);
 void decode_0xxx(u_int16_t op);
 void decode_8xxx(u_int16_t op);
 void decode_Exxx(u_int16_t op);
 void decode_Fxxx(u_int16_t op);
 
+//core.c
+int init_core();
+int load_program(const char* file_path);
+void reset_keys();
+void load_font();
+u_int16_t fetch();
+void skip();
 void op_00E0();
 void op_00EE();
 void op_1NNN(int nnn);
