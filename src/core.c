@@ -118,6 +118,34 @@ void skip() {
 }
 
 
+void rollback() {
+	pc -= 2;
+}
+
+
+void set_key(u_int8_t key, bool state) {
+	memory[KEY_OFFSET + key] = state;
+}
+
+
+bool get_key(u_int8_t key) {
+	return memory[KEY_OFFSET + key] != 0;
+}
+
+
+void dec_delay() {
+	if (delay == 0) return;
+
+	delay--;
+}
+
+void dec_sound() {
+	if (sound == 0) return;
+
+	sound--;
+}
+
+
 //opcode execute functions.
 void op_00E0() {
 	for (int l = 0; l < 2048; l++) {
@@ -374,13 +402,13 @@ void op_FX0A(int x) {
 	*/
 
 	for(int l = 0; l < 0xF; l++) {
-		if(memory[KEY_OFFSET + l] == 0x1) {
+		if(get_key(l)) {
 			registers[x] = l;
 			return;
 		}
 	}
 
-	pc -= 2;
+	halt();
 }
 
 void op_FX15(int x) {

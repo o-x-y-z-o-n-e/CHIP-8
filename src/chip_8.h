@@ -23,6 +23,8 @@ typedef uint16_t u_int16_t;
 
 //main.c
 void run();
+void halt();
+void handle_key(SDL_Keycode key, bool state);
 
 //video.c
 int init_video();
@@ -43,6 +45,11 @@ void reset_keys();
 void load_font();
 u_int16_t fetch();
 void skip();
+void rollback();
+void set_key(u_int8_t key, bool state);
+bool get_key(u_int8_t key);
+void dec_delay();
+void dec_sound();
 void op_00E0();
 void op_00EE();
 void op_1NNN(int nnn);

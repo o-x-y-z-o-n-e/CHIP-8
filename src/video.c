@@ -32,6 +32,8 @@ int init_video() {
 		return 1;
 	}
 
+	SDL_RenderSetLogicalSize(renderer, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+
 	return 0;
 }
 
@@ -47,18 +49,19 @@ void draw_screen(u_int8_t* display_data) {
 	for (int x = 0; x < DISPLAY_WIDTH; x++) {
 		for (int y = 0; y < DISPLAY_HEIGHT; y++) {
 			if (display_data[x + (DISPLAY_WIDTH * y)] != 0) {
-				SDL_Rect pixel = { x * window_scale, y * window_scale, window_scale, window_scale };
+				SDL_Rect pixel = { x, y, 1, 1 };
 				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderFillRect(renderer, &pixel);
 			}
 		}
 	}
 
-	SDL_RenderGetScale(renderer, &test, &test);
+	SDL_RenderPresent(renderer);
 }
 
 
 void close_video() {
+	SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
     SDL_Quit();
