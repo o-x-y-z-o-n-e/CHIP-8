@@ -1,14 +1,24 @@
 #include "chip_8.h"
 
+bool loaded = false;
 bool replay;
 
 int main(int argc, char* argv[]) {
-	if(argc < 2) {
-		printf("ERROR: Pass game ROM file.\n");
-		return 1;
+	for (int i = 1; i < argc; i++) {
+		if (check_arg(argv[i], "-v", "-version")) {
+			printf("CHIP-8 Version: %s\n", VERSION);
+			return 0;
+		}
+
+		if (load_program(argv[1]) != 0) {
+			return 1;
+		}
+
+		loaded = true;
 	}
 
-	if(load_program(argv[1]) != 0) {
+	if(!loaded) {
+		printf("ERROR: Pass game ROM file.\n");
 		return 1;
 	}
 
@@ -152,4 +162,12 @@ void handle_key(SDL_Keycode key, bool state) {
 			break;
 		}
 	}
+}
+
+
+bool check_arg(const char* arg, const char* short_arg, const char* long_arg) {
+	if (strcmp(arg, short_arg) == 0) return true;
+	if (strcmp(arg, long_arg) == 0) return true;
+
+	return false;
 }

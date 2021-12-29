@@ -4,10 +4,7 @@ int window_scale = 8;
 int window_width = DISPLAY_WIDTH;
 int window_height = DISPLAY_HEIGHT;
 
-float test = 1;
-
 SDL_Window* window = NULL;
-//SDL_Surface* screen = NULL;
 SDL_Renderer* renderer = NULL;
 
 int init_video() {
@@ -25,7 +22,6 @@ int init_video() {
         return 1;
     }
 
-    //screen = SDL_GetWindowSurface(window);
 	renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED);
 	if (renderer == NULL) {
 		printf("ERROR: Could not initialize renderer!\n");

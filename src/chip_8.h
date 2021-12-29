@@ -1,6 +1,8 @@
 #ifndef CHIP_8_H
 #define CHIP_8_H
 
+#define VERSION "1.0.0"
+
 #define DISPLAY_WIDTH 64
 #define DISPLAY_HEIGHT 32
 
@@ -25,6 +27,7 @@ typedef uint16_t u_int16_t;
 void run();
 void halt();
 void handle_key(SDL_Keycode key, bool state);
+bool check_arg(const char* arg, const char* short_arg, const char* long_arg);
 
 //video.c
 int init_video();
